@@ -61,7 +61,7 @@ namespace TabloidCLI.UserInterfaceManagers
             List<Journal> journals = _journalRepository.GetAll();
             foreach (Journal journal in journals)
             {
-                Console.WriteLine(journal.Title);
+                Console.WriteLine($"{journal.Title} - {journal.Content} - {journal.CreateDateTime}");
             }
         }
 
