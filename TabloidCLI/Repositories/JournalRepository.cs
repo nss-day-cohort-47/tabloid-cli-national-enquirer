@@ -11,7 +11,7 @@ namespace TabloidCLI.Repositories
 
         public List<Journal> GetAll()
         {
-            using (SqlConnection conn = Connection))
+            using (SqlConnection conn = Connection)
             {
                 conn.Open();
 
