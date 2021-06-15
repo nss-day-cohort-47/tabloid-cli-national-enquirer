@@ -1,4 +1,6 @@
 ﻿using TabloidCLI.UserInterfaceManagers;
+using System;
+
 
 namespace TabloidCLI
 {
@@ -6,6 +8,8 @@ namespace TabloidCLI
     {
         static void Main(string[] args)
         {
+            Console.Clear();
+            Console.WriteLine("Welcome to The National Enquirer, the best tabloid every created");
             // MainMenuManager implements the IUserInterfaceManager interface
             IUserInterfaceManager ui = new MainMenuManager();
             while (ui != null)
