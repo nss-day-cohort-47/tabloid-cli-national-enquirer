@@ -11,7 +11,7 @@ namespace TabloidCLI.UserInterfaceManagers
         private readonly IUserInterfaceManager _parentUI;
         private PostRepository _postRepository;
         private AuthorRepository _authorRepository;
-        //private BlogRepository _blogRepository;
+        // private BlogRepository _blogRepository;
         private string _connectionString;
 
         public PostManager(IUserInterfaceManager parentUI, string connectionString)
@@ -74,20 +74,24 @@ namespace TabloidCLI.UserInterfaceManagers
         private void Add()
         {
             List<Author> authors = _authorRepository.GetAll();
-            //List<Blog> blogs = _blogRepository.GetAll();
+            // List<Blog> blogs = _blogRepository.GetAll();
 
             Author postAuthor = null;
-            Blog postBlog = null;
+            // Blog postBlog = null;
             DateTime postDate = new DateTime();
+
             Console.Clear();
-            string postTitle = UserPrompt("Post title: ");
+            Console.Write("Post title: ");
+            string postTitle = Console.ReadLine();
+
             Console.Clear();
-            string postUrl = UserPrompt("Post url: ");
+            Console.Write("Post url: ");
+            string postUrl = Console.ReadLine();
 
             bool enteringDate = true;
             while (enteringDate)
             {
-                Console.Write("When was this post published? (mm/dd/yyyy): ");
+                Console.Write("Post publication date (mm/dd/yyyy): ");
                 string dateInput = Console.ReadLine();
                 try
                 {
@@ -100,20 +104,88 @@ namespace TabloidCLI.UserInterfaceManagers
                     Console.WriteLine("Invalid date");
                 }
             }
+
+            bool enteringAuthor = true;
+            while (enteringAuthor)
+            {
+                Console.WriteLine("Please choose the post's Author:");
+
+                for (int i = 0; i < authors.Count; i++)
+                {
+                    Author author = authors[i];
+                    Console.WriteLine($"{author.Id} - {author.FullName}");
+                }
+                Console.Write("> ");
+                string input = Console.ReadLine();
+                try
+                {
+                    Console.Clear();
+                    int choice = int.Parse(input);
+                    postAuthor = authors.Find(a => a.Id == choice);
+                    enteringAuthor = false;
+                }
+                catch (Exception ex)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Invalid Selection");
+                }
+            }
+
+            Post newPost = new Post()
+            {
+                Title = postTitle,
+                Url = postUrl,
+                Author = postAuthor,
+                PublishDateTime = postDate
+            };
+
+            _postRepository.Insert(newPost);
+
+            Console.Clear();
+            Console.WriteLine($"\"{newPost.Title}\" was successfully added!");
+            Console.WriteLine();
         }
+    }
+
         private void Edit()
         {
-
-        }
+           
         private void Remove()
         {
 
         }
-        private string UserPrompt(string message)
+        private Post Choose(string prompt = null)
         {
-            Console.Write(message);
-            string output = Console.ReadLine();
-            return output;
+            Console.Clear();
+            if (prompt == null)
+            {
+                prompt = "Please choose a Post:";
+            }
+
+            Console.WriteLine(prompt);
+
+            List<Post> posts = _postRepository.GetAll();
+
+            for (int i = 0; i < posts.Count; i++)
+            {
+                Post post = posts[i];
+                Console.WriteLine($" {i + 1}) {post.Title}");
+            }
+            Console.Write("> ");
+
+            string input = Console.ReadLine();
+            try
+            {
+                Console.Clear();
+                int choice = int.Parse(input);
+                return posts[choice - 1];
+            }
+            catch (Exception ex)
+            {
+                Console.Clear();
+                Console.WriteLine("Invalid Selection");
+                return null;
+            }
         }
     }
 }
