@@ -22,7 +22,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("Author Menu");
             Console.WriteLine(" 1) List Authors");
             Console.WriteLine(" 2) Author Details");
-            Console.WriteLine(" 3) Add Author");
+            Console.WriteLine(" 3) Add an Author");
             Console.WriteLine(" 4) Edit Author");
             Console.WriteLine(" 5) Remove Author");
             Console.WriteLine(" 0) Go Back");
@@ -103,7 +103,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void Add()
         {
-            Console.WriteLine("New Author");
+            Console.WriteLine("Add a New Author");
             Author author = new Author();
 
             Console.Write("First Name: ");
@@ -114,6 +114,8 @@ namespace TabloidCLI.UserInterfaceManagers
 
             Console.Write("Bio: ");
             author.Bio = Console.ReadLine();
+
+            Console.WriteLine($"Adding {author.FullName} to the database");
 
             _authorRepository.Insert(author);
         }
