@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using TabloidCLI.Models;
+using TabloidCLI.Repositories;
 
-namespace TabloidCLI.Repositories
+namespace TabloidCLI
 {
-    public class JournalRepository : DataBaseConneector, IRepository<Journal>
+    public class JournalRepository : DatabaseConnector, IRepository<Journal>
     {
         public JournalRepository(string connectionString) : base(connectionString) { }
 
@@ -15,12 +16,12 @@ namespace TabloidCLI.Repositories
             {
                 conn.Open();
 
-                using (SqlCommand cmd - conn.CreateCommand())
+                using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT Journal.Id,
-                                               Journal.Title,
-                                               Journal.Content,
-                                               Journal.CreateDateTime
+                    cmd.CommandText = @"SELECT Id,
+                                               Title,
+                                               Content,
+                                               CreateDateTime
                                                FROM Journal";
 
                     List<Journal> journals = new List<Journal>();
@@ -33,7 +34,7 @@ namespace TabloidCLI.Repositories
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Title = reader.GetString(reader.GetOrdinal("Title")),
-                            Content = reader.GetString(reader.GetOridnal("Conetent")),
+                            Content = reader.GetString(reader.GetOrdinal("Conetent")),
                             CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
                         };
                         journals.Add(journal);
@@ -44,7 +45,45 @@ namespace TabloidCLI.Repositories
             }
         }
 
-        public void Insert(Jounral journal)
+        public Journal Get(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id,
+                                        Title,
+                                        Conetent,
+                                        CreateDateRTime
+                                        FROM Journal
+                                        WHERE id = @id";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+                    Journal journal = null;
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        if (journal == null)
+                        {
+                            journal = new Journal()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Content = reader.GetString(reader.GetOrdinal("Conetent")),
+                                CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                            };
+                        }
+                    }
+                    reader.Close();
+                    return journal; 
+                }
+            }
+        }
+
+        public void Insert(Journal journal)
         {
             using (SqlConnection conn = Connection)
             {
@@ -52,15 +91,25 @@ namespace TabloidCLI.Repositories
 
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO Journal (Title, Conetnt, CreateDateTime)
+                    cmd.CommandText = @"INSERT INTO Journal (Title, Content, CreateDateTime)
                                         VALUES (@title, @content, @createDateTime)";
                     cmd.Parameters.AddWithValue(@"title", journal.Title);
                     cmd.Parameters.AddWithValue(@"content", journal.Content);
-                    cmd.Parameters.AddValueWIth(@"createDateTime", journal.CreateDateTime);
+                    cmd.Parameters.AddWithValue(@"createDateTime", journal.CreateDateTime);
 
-                    int id = (int)cmd.ExecuteScalar();
-                    journal.Id = id;
+                    cmd.ExecuteNonQuery();
+                }
             }
+        }
+
+        public void Update(Journal entry)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
