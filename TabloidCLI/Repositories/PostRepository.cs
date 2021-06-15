@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using TabloidCLI.Models;
+using TabloidCLI.Repositories;
 
-namespace TabloidCLI.Repositories
+namespace TabloidCLI
 {
     public class PostRepository : DatabaseConnector, IRepository<Post>
     {
@@ -16,17 +17,29 @@ namespace TabloidCLI.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT Title, URL
+                    cmd.CommandText = @"SELECT Title, URL, PublishDateTime, AuthorId, BlogId, Id
                                             FROM Post";
 
                     List<Post> posts = new List<Post>();
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
+                        int authorId = reader.GetInt32(reader.GetOrdinal("AuthorId"));
+                        int blogId = reader.GetInt32(reader.GetOrdinal("BlogId"));
                         Post post = new Post()
                         {
                             Title = reader.GetString(reader.GetOrdinal("Title")),
-                            Url = reader.GetString(reader.GetOrdinal("URL"))
+                            Url = reader.GetString(reader.GetOrdinal("URL")),
+                            PublishDateTime = reader.GetDateTime(reader.GetOrdinal("PublishDateTime")),
+                            Author = new Author()
+                            {
+                                Id = authorId
+                            },
+                            Blog = new Blog()
+                            {
+                                Id = blogId
+                            },
+                            Id = reader.GetInt32(reader.GetOrdinal("Id"))                            
                         };
                         posts.Add(post);
                     }
@@ -114,7 +127,7 @@ namespace TabloidCLI.Repositories
                     cmd.Parameters.AddWithValue("@url", post.Url);
                     cmd.Parameters.AddWithValue("@publishDateTime", post.PublishDateTime);
                     cmd.Parameters.AddWithValue("@authorId", post.Author.Id);
-                    cmd.Parameters.AddWithValue("@blogId", 3);
+                    cmd.Parameters.AddWithValue("@blogId", post.Blog.Id);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -123,12 +136,43 @@ namespace TabloidCLI.Repositories
 
         public void Update(Post post)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Update Post
+                                            SET Title = @title,
+                                                URL = @url,
+                                                PublishDateTime = @publishDateTime,
+                                                AuthorId = @authorId,
+                                                BlogId = @blogId
+                                            WHERE id = @id";
+                    cmd.Parameters.AddWithValue("@title", post.Title);
+                    cmd.Parameters.AddWithValue("@url", post.Url);
+                    cmd.Parameters.AddWithValue("@publishDateTime", post.PublishDateTime);
+                    cmd.Parameters.AddWithValue("@authorId", post.Author.Id);
+                    cmd.Parameters.AddWithValue("@blogId", post.Blog.Id);
+                    cmd.Parameters.AddWithValue("@id", post.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM Post WHERE id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
