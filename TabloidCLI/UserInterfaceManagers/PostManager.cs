@@ -11,7 +11,6 @@ namespace TabloidCLI.UserInterfaceManagers
         private readonly IUserInterfaceManager _parentUI;
         private PostRepository _postRepository;
         private AuthorRepository _authorRepository;
-        // private BlogRepository _blogRepository;
         private string _connectionString;
 
         public PostManager(IUserInterfaceManager parentUI, string connectionString)
@@ -20,7 +19,6 @@ namespace TabloidCLI.UserInterfaceManagers
             _postRepository = new PostRepository(connectionString);
             _authorRepository = new AuthorRepository(connectionString);
             _connectionString = connectionString;
-            // _blogRepository = new BlogRepository(connectionString);
         }
         public IUserInterfaceManager Execute()
         {
@@ -74,10 +72,9 @@ namespace TabloidCLI.UserInterfaceManagers
         private void Add()
         {
             List<Author> authors = _authorRepository.GetAll();
-            // List<Blog> blogs = _blogRepository.GetAll();
 
             Author postAuthor = null;
-            // Blog postBlog = null;
+            Blog postBlog = null;
             DateTime postDate = new DateTime();
 
             Console.Clear();
@@ -91,7 +88,7 @@ namespace TabloidCLI.UserInterfaceManagers
             bool enteringDate = true;
             while (enteringDate)
             {
-                Console.Write("Post publication date (mm/dd/yyyy): ");
+                Console.Write("When was the post published? Format the response as (mm/dd/yyyy): ");
                 string dateInput = Console.ReadLine();
                 try
                 {
@@ -121,7 +118,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 {
                     Console.Clear();
                     int choice = int.Parse(input);
-                    postAuthor = authors.Find(a => a.Id == choice);
+                    postAuthor = authors[choice];
                     enteringAuthor = false;
                 }
                 catch (Exception ex)
@@ -136,6 +133,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 Title = postTitle,
                 Url = postUrl,
                 Author = postAuthor,
+                Blog = postBlog,
                 PublishDateTime = postDate
             };
 
@@ -145,47 +143,13 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine($"\"{newPost.Title}\" was successfully added!");
             Console.WriteLine();
         }
-    }
-
         private void Edit()
-        {
-           
-        private void Remove()
         {
 
         }
-        private Post Choose(string prompt = null)
+        private void Remove()
         {
-            Console.Clear();
-            if (prompt == null)
-            {
-                prompt = "Please choose a Post:";
-            }
 
-            Console.WriteLine(prompt);
-
-            List<Post> posts = _postRepository.GetAll();
-
-            for (int i = 0; i < posts.Count; i++)
-            {
-                Post post = posts[i];
-                Console.WriteLine($" {i + 1}) {post.Title}");
-            }
-            Console.Write("> ");
-
-            string input = Console.ReadLine();
-            try
-            {
-                Console.Clear();
-                int choice = int.Parse(input);
-                return posts[choice - 1];
-            }
-            catch (Exception ex)
-            {
-                Console.Clear();
-                Console.WriteLine("Invalid Selection");
-                return null;
-            }
         }
     }
 }
