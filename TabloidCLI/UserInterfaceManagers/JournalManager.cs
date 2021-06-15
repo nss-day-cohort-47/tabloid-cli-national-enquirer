@@ -107,8 +107,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("Content: ");
             journal.Content = Console.ReadLine();
 
-            Console.Write("Date: ");
-            journal.CreateDateTime = DateTime.Parse(Console.ReadLine());
+            journal.CreateDateTime = DateTime.Now;
 
             _journalRepository.Insert(journal);
             Console.WriteLine();
@@ -139,6 +138,8 @@ namespace TabloidCLI.UserInterfaceManagers
             journalToEdit.CreateDateTime = DateTime.Now;
 
             _journalRepository.Update(journalToEdit);
+
+            Console.WriteLine();
         }
 
         private void Remove()
@@ -147,6 +148,7 @@ namespace TabloidCLI.UserInterfaceManagers
             if (journalToDelete != null)
             {
                 _journalRepository.Delete(journalToDelete.Id);
+                Console.WriteLine();
             }
         }
     }
