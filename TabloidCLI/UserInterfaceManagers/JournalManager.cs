@@ -29,19 +29,24 @@ namespace TabloidCLI.UserInterfaceManagers
 
             Console.Write("> ");
             string choice = Console.ReadLine();
+            Console.WriteLine();
             switch (choice)
             {
                 case "1":
                     List();
+                    Console.WriteLine();
                     return this;
                 case "2":
                     Add();
+                    Console.WriteLine();
                     return this;
                 case "3":
                     Edit();
+                    Console.WriteLine();
                     return this;
                 case "4":
                     Remove();
+                    Console.WriteLine();
                     return this;
                 case "0":
                     return _parentUI;
@@ -106,6 +111,7 @@ namespace TabloidCLI.UserInterfaceManagers
             journal.CreateDateTime = DateTime.Parse(Console.ReadLine());
 
             _journalRepository.Insert(journal);
+            Console.WriteLine();
         }
 
         private void Edit()
@@ -117,20 +123,20 @@ namespace TabloidCLI.UserInterfaceManagers
             }
 
             Console.WriteLine();
-            Console.Write("New title (blank to leave unchanged: ");
+            Console.Write("New title (continue to leave unchanged): ");
             string title = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(title))
             {
                 journalToEdit.Title = title;
             }
-            Console.Write("New content (blank to leave unchanged: ");
+            Console.Write("New content (continue to leave unchanged): ");
             string content = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(content))
             {
                 journalToEdit.Content = content;
             }
 
-            Console.Write("New date (blank to leave unchanged: ");
+            Console.Write("New date (continue to leave unchanged): ");
             bool success = DateTime.TryParse(Console.ReadLine(), out DateTime date);
             if (success)
             {
