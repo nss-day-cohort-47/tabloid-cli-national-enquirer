@@ -11,7 +11,7 @@ namespace TabloidCLI.UserInterfaceManagers
         private readonly IUserInterfaceManager _parentUI;
         private PostRepository _postRepository;
         private AuthorRepository _authorRepository;
-        private BlogRepository _blogRepository;
+        //private BlogRepository _blogRepository;
         private string _connectionString;
 
         public PostManager(IUserInterfaceManager parentUI, string connectionString)
@@ -20,7 +20,7 @@ namespace TabloidCLI.UserInterfaceManagers
             _postRepository = new PostRepository(connectionString);
             _authorRepository = new AuthorRepository(connectionString);
             _connectionString = connectionString;
-            _blogRepository = new BlogRepository(connectionString);
+            // _blogRepository = new BlogRepository(connectionString);
         }
         public IUserInterfaceManager Execute()
         {
@@ -74,20 +74,20 @@ namespace TabloidCLI.UserInterfaceManagers
         private void Add()
         {
             List<Author> authors = _authorRepository.GetAll();
-            List<Blog> blogs = _blogRepository.GetAll();
+            //List<Blog> blogs = _blogRepository.GetAll();
 
             Author postAuthor = null;
             Blog postBlog = null;
             DateTime postDate = new DateTime();
             Console.Clear();
-            string postTitle = StringPrompt("Post title: ");
+            string postTitle = UserPrompt("Post title: ");
             Console.Clear();
-            string postUrl = StringPrompt("Post url: ");
+            string postUrl = UserPrompt("Post url: ");
 
             bool enteringDate = true;
             while (enteringDate)
             {
-                Console.Write("Post publication date (mm/dd/yyyy): ");
+                Console.Write("When was this post published? (mm/dd/yyyy): ");
                 string dateInput = Console.ReadLine();
                 try
                 {
@@ -100,14 +100,20 @@ namespace TabloidCLI.UserInterfaceManagers
                     Console.WriteLine("Invalid date");
                 }
             }
-            private void Edit()
-            {
+        }
+        private void Edit()
+        {
 
-            }
-            private void Remove()
-            {
+        }
+        private void Remove()
+        {
 
-            }
+        }
+        private string UserPrompt(string message)
+        {
+            Console.Write(message);
+            string output = Console.ReadLine();
+            return output;
         }
     }
 }
