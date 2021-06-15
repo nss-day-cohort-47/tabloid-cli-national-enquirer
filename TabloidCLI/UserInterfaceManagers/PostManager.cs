@@ -118,7 +118,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 {
                     Console.Clear();
                     int choice = int.Parse(input);
-                    postAuthor = authors[choice];
+                    postAuthor = authors.Find(a => a.Id == choice);
                     enteringAuthor = false;
                 }
                 catch (Exception ex)
