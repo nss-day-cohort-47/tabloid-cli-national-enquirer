@@ -34,6 +34,7 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 case "1":
                     List();
+                    Console.WriteLine();
                     return this;
                 case "2":
                     Author author = Choose();
@@ -47,12 +48,15 @@ namespace TabloidCLI.UserInterfaceManagers
                     }
                 case "3":
                     Add();
+                    Console.WriteLine();
                     return this;
                 case "4":
                     Edit();
+                    Console.WriteLine();
                     return this;
                 case "5":
                     Remove();
+                    Console.WriteLine();
                     return this;
                 case "0":
                     return _parentUI;
@@ -130,13 +134,13 @@ namespace TabloidCLI.UserInterfaceManagers
             }
 
             Console.WriteLine();
-            Console.Write("New first name (blank to leave unchanged: ");
+            Console.Write("New first name (blank to leave unchanged): ");
             string firstName = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(firstName))
             {
                 authorToEdit.FirstName = firstName;
             }
-            Console.Write("New last name (blank to leave unchanged: ");
+            Console.Write("New last name (blank to leave unchanged): ");
             string lastName = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(lastName))
             {
