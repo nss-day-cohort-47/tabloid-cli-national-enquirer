@@ -10,6 +10,7 @@ namespace TabloidCLI
         {
             Console.Clear();
             Console.WriteLine("Welcome to The National Enquirer, the best tabloid ever created");
+            Console.WriteLine("===============================================================");
             // MainMenuManager implements the IUserInterfaceManager interface
             IUserInterfaceManager ui = new MainMenuManager();
             while (ui != null)
