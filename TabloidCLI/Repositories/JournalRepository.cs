@@ -54,7 +54,12 @@ namespace TabloidCLI.Repositories
                 {
                     cmd.CommandText = @"INSERT INTO Journal (Title, Conetnt, CreateDateTime)
                                         VALUES (@title, @content, @createDateTime)";
-                }
+                    cmd.Parameters.AddWithValue(@"title", journal.Title);
+                    cmd.Parameters.AddWithValue(@"content", journal.Content);
+                    cmd.Parameters.AddValueWIth(@"createDateTime", journal.CreateDateTime);
+
+                    int id = (int)cmd.ExecuteScalar();
+                    journal.Id = id;
             }
         }
     }
