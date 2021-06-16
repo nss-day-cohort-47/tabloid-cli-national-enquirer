@@ -238,6 +238,7 @@ public Post Get(int id)
             }
         }
 
+
         public void Insert(Post post)
         {
             using (SqlConnection conn = Connection)

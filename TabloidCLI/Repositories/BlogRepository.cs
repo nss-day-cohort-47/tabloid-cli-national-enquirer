@@ -52,8 +52,12 @@ namespace TabloidCLI
                 {
                     cmd.CommandText = @"SELECT b.Id AS BlogId,
                                                b.Title,
-                                               b.Url
+                                               b.Url,
+                                               t.Id AS TagId,
+                                               t.NamE
                                         FROM Blog b
+                                   LEFT JOIN BlogTag bt on b.Id = bt.BlogId
+                                   LEFT JOIN Tag t on t.Id = bt.TagId
                                         WHERE b.Id = @id";
 
                     cmd.Parameters.AddWithValue("@id", id);
@@ -73,7 +77,14 @@ namespace TabloidCLI
                             };
                         }
 
-
+                        if (!reader.IsDBNull(reader.GetOrdinal("TagId")))
+                        {
+                            blog.Tags.Add(new Tag()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("TagId")),
+                                Name = reader.GetString(reader.GetOrdinal("Name")),
+                            });
+                        }
                     }
 
                     reader.Close();
