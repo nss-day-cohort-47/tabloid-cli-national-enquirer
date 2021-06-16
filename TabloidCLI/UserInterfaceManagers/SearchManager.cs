@@ -47,18 +47,23 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void SearchAuthors()
         {
-            Console.Write("Tag> ");
-            string tagName = Console.ReadLine();
-
+            Console.Write("Please select a tag to search for");
+             List<Tag> tags = _tagRepository.GetAll();
+            for (int i = 0; i < tags.Count; i++)
+            {
+                Tag tag = tags[i];
+                Console.WriteLine($" {i + 1}) {tag.Name}");
+            }
+            Console.Write("> ");
+            int tagId = int.Parse(Console.ReadLine());
+            string tagName = tags[tagId - 1].Name;
             SearchResults<Author> results = _tagRepository.SearchAuthors(tagName);
-
             if (results.NoResultsFound)
             {
                 Console.WriteLine($"No results for {tagName}");
             }
             else
             {
-                Console.WriteLine("Search Results");
                 results.Display();
             }
         }
@@ -79,10 +84,22 @@ namespace TabloidCLI.UserInterfaceManagers
                 results.Display();
             }
         }
+
+        private void SearchPosts()
+        {
+            Console.Write("Tags> ");
+            string tagName = Console.ReadLine();
+
+            SearchResults<Post> results = _tagRepository.SearchPosts(tagName);
+
+            if (results.NoResultsFound)
+            {
+                Console.WriteLine($"No results for {tagName}");
+            }
+            else
+            {
+                results.Display();
+            }
+        }
     }
 }
-
-
-
-
-

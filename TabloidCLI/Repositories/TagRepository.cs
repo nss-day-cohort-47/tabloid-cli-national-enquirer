@@ -200,5 +200,7 @@ namespace TabloidCLI
                 }
             }
         }
+
+        public SearchResults<Post> Search
     }
 }
