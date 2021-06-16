@@ -124,6 +124,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void SearchAll()
         {
+            // This is taken from above again to have a list of tags for a user to choose from... 
             Console.WriteLine("Please select a tag to search for: ");
             List<Tag> tags = _tagRepository.GetAll();
             for (int i = 0; i < tags.Count; i++)
@@ -135,6 +136,8 @@ namespace TabloidCLI.UserInterfaceManagers
             int tagId = int.Parse(Console.ReadLine());
             string tagName = tags[tagId - 1].Name;
 
+            // We need to call the already defined searches to be triggered in the search all. 
+            // It will look through the tag and find what ever is attached.
             SearchResults<Blog> blogResults = _tagRepository.SearchBlogs(tagName);
             SearchResults<Author> authorResults = _tagRepository.SearchAuthors(tagName);
             SearchResults<Post> postResults = _tagRepository.SearchPosts(tagName);
@@ -145,13 +148,15 @@ namespace TabloidCLI.UserInterfaceManagers
             }
             else
             {
-                Console.WriteLine(blogResults.NoResultsFound ? "No matching tags in Blogs" : $"{tagName} in Blogs");
+                // Ternary that will show us that that tag doesnt match anything in our database or 
+                // or will show those objects attached to the tag. (May need a little more work)
+                Console.WriteLine(blogResults.NoResultsFound ? "No matching tags in Blogs" : $"{tagName}: in Blogs");
                 blogResults.Display();
 
-                Console.WriteLine(authorResults.NoResultsFound ? "No matching tags in Authors" : $"{tagName} in Authors");
+                Console.WriteLine(authorResults.NoResultsFound ? "No matching tags in Authors" : $"{tagName}: in Authors");
                 authorResults.Display();
 
-                Console.WriteLine(postResults.NoResultsFound ? "No matching tags in Posts" : $"{tagName} in Posts");
+                Console.WriteLine(postResults.NoResultsFound ? "No matching tags in Posts" : $"{tagName}: in Posts");
                 postResults.Display();
             }
         }
