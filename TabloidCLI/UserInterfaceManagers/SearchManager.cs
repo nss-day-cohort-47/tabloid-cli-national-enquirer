@@ -58,7 +58,6 @@ namespace TabloidCLI.UserInterfaceManagers
             }
             else
             {
-                Console.WriteLine("Search Results");
                 results.Display();
             }
         }
