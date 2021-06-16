@@ -12,6 +12,7 @@ namespace TabloidCLI.UserInterfaceManagers
         private PostRepository _postRepository;
         private int _postId;
         private TagRepository _tagRepository;
+        private NoteManager _noteManager;
 
         public PostDetailManager(IUserInterfaceManager parentUI, string connectionString, int postId)
         {
@@ -19,6 +20,7 @@ namespace TabloidCLI.UserInterfaceManagers
             _postRepository = new PostRepository(connectionString);
             _postId = postId;
             _tagRepository = new TagRepository(connectionString);
+            _noteManager = new NoteManager(this, connectionString);
         }
         //if this looks familiar to AuthorDetailManager that's good, because I copied this from there and bent it to my will
         public IUserInterfaceManager Execute()
@@ -45,7 +47,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     RemoveTag();
                     return this;
                 case "4":
-                    return this;
+                    return _noteManager;
                 case "0":
                     return _parentUI;
                 default:

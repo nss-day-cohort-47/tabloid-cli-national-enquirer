@@ -51,7 +51,8 @@ namespace TabloidCLI.UserInterfaceManagers
                     Remove();
                     return this;
                 case "5":
-                    throw new NotImplementedException();
+                    NoteList();
+                    return this;
                 case "6":
                     Post post = Choose();
                     if (post == null)
@@ -351,6 +352,17 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(message);
             string output = Console.ReadLine();
             return output;
+        }
+        private void NoteList()
+        {
+            List<Note> nosts = _noteRepository.GetAll();
+            Console.WriteLine("Notes: ");
+            Console.WriteLine("");
+            foreach (Note note in notes)
+            {
+                Console.WriteLine($"Note Title: {note.Title}  Content of the note: {note.content} Created on {note.CreateDateTime}");
+            }
+            Console.WriteLine("");
         }
     }
 }
