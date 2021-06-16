@@ -18,7 +18,8 @@ namespace TabloidCLI
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"SELECT Title, URL, PublishDateTime, AuthorId, BlogId, Id
-                                            FROM Post";
+                                            FROM Post
+                                            WHERE isDeleted=0";
 
                     List<Post> posts = new List<Post>();
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -292,13 +293,15 @@ public Post Get(int id)
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"DELETE FROM Post WHERE id = @id";
+                    cmd.CommandText = @"UPDATE Post SET isDeleted=@isDeleted WHERE id = @id";
+                    cmd.Parameters.AddWithValue("@isDeleted", 1);
                     cmd.Parameters.AddWithValue("@id", id);
 
                     cmd.ExecuteNonQuery();
                 }
             }
         }
+
                 public void InsertTag(Post post, Tag tag)
         {
             using (SqlConnection conn = Connection)
