@@ -30,6 +30,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 3) Edit Post");
             Console.WriteLine(" 4) Remove Post");
             Console.WriteLine(" 5) Note Management");
+            Console.WriteLine(" 6) Post Details");
             Console.WriteLine(" 0) Return to Main Menu");
 
             Console.Write("> ");
@@ -51,6 +52,16 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                 case "5":
                     throw new NotImplementedException();
+                case "6":
+                    Post post = Choose();
+                    if (post == null)
+                    {
+                        return this;
+                    }
+                    else
+                    {
+                        return new PostDetailManager(this, _connectionString, post.Id);
+                    }
                 case "0":
                     return _parentUI;
                 default:
