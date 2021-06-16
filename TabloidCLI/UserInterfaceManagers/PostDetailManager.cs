@@ -11,12 +11,14 @@ namespace TabloidCLI.UserInterfaceManagers
         private IUserInterfaceManager _parentUI;
         private PostRepository _postRepository;
         private int _postId;
+        private TagRepository _tagRepository;
 
         public PostDetailManager(IUserInterfaceManager parentUI, string connectionString, int postId)
         {
             _parentUI = parentUI;
             _postRepository = new PostRepository(connectionString);
             _postId = postId;
+            _tagRepository = new TagRepository(connectionString);
         }
         //if this looks familiar to AuthorDetailManager that's good, because I copied this from there and bent it to my will
         public IUserInterfaceManager Execute()
@@ -58,6 +60,11 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine($"Post title: {post.Title}");
             Console.WriteLine($"Post URL: {post.Url}");
             Console.WriteLine($"Post publication date: {post.PublishDateTime.ToString("D")}");
+            Console.Write("Tags:");
+            foreach (Tag tag in post.Tags)
+            {
+                Console.Write(" " + tag);
+            }
             Console.WriteLine(@"
                                         _.--^^^--,
                                     .'          `\
@@ -84,20 +91,81 @@ namespace TabloidCLI.UserInterfaceManagers
                       ||    _    _   /
                       /|\  (_\  /_) /
                       \ \'._  ` '_.'
-                       `^^` `^^^`
-    ");
-            Console.Write("Press any key to continue...");
+                       `^^` `^^^`");
+            Console.Write("Smash your keyboard to move on, but not too hard.");
             Console.ReadKey();
             Console.Clear();
         }
         private void AddTag()
         {
-           //tags will be added to posts next, these are placeholders
+            Post post = _postRepository.Get(_postId);
+
+            Console.WriteLine($"Choose a tag to connect to {post.Title}?");
+            List<Tag> tags = _tagRepository.GetAll();
+
+            for (int i = 0; i < tags.Count; i++)
+            {
+                Tag tag = tags[i];
+                Console.WriteLine($" {i + 1}) {tag.Name}");
+            }
+            Console.Write("> ");
+
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                Tag tag = tags[choice - 1];
+                _postRepository.InsertTag(post, tag);
+                Console.WriteLine($"{tag.Name} has been successfully paired to {post.Title}");
+                Console.WriteLine();
+                Console.WriteLine("Press enter to continue.");
+                Console.ReadLine();
+                Console.Clear();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Once again you managed to pick an option that doesn't exist, go away.");
+                Console.WriteLine();
+                Console.WriteLine("Smash your keyboard to move on");
+                Console.ReadLine();
+                Console.Clear();
+            }
 
         }
         private void RemoveTag()
         {
-            //tags will be added to posts next, these are placeholders
+            Post post = _postRepository.Get(_postId);
+
+            Console.WriteLine($"Which tag would you like to remove from {post.Title}?");
+            List<Tag> tags = post.Tags;
+
+            for (int i = 0; i < tags.Count; i++)
+            {
+                Tag tag = tags[i];
+                Console.WriteLine($" {i + 1}) {tag.Name}");
+            }
+            Console.Write("> ");
+
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                Tag tag = tags[choice - 1];
+                _postRepository.DeleteTag(post.Id, tag.Id);
+                Console.WriteLine($"Successfully removed ({tag.Name}) tag from {post.Title}");
+                Console.WriteLine();
+                Console.WriteLine("Press enter to continue.");
+                Console.ReadLine();
+                Console.Clear();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Invalid Selection. Won't remove any tags.");
+                Console.WriteLine();
+                Console.WriteLine("Press enter to continue.");
+                Console.ReadLine();
+                Console.Clear();
+            }
         }
     }
 }
