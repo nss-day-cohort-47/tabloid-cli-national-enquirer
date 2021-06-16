@@ -144,7 +144,7 @@ namespace TabloidCLI
             using (SqlConnection conn = Connection)
             {
                 conn.Open();
-                using (SqlCommand cmd = conn.CreateCommand())1
+                using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"INSERT INTO BlogTag (BlogId, TagId)
                                         VALUES (@blogId, @tagId)";
