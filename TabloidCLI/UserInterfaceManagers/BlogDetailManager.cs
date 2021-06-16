@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using TabloidCLI.Models;
+using TabloidCLI.Repositories;
+
 namespace TabloidCLI.UserInterfaceManagers
 {
     internal class BlogDetailManager : IUserInterfaceManager
@@ -91,8 +96,9 @@ namespace TabloidCLI.UserInterfaceManagers
                 int choice = int.Parse(input);
                 Tag tag = tags[choice - 1];
                 _blogRepository.InsertTag(blog, tag);
+                Console.WriteLine("Tag added");
             }
-            catch (Exeption ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Invalid Selection. Won't add any tags.");
             }
