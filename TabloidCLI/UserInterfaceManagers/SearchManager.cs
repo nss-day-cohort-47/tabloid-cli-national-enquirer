@@ -38,6 +38,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     SearchPosts();
                     return this;
                 case "4":
+                    SearchAll();
                     return this;
                 case "0":
                     return _parentUI;
@@ -118,6 +119,40 @@ namespace TabloidCLI.UserInterfaceManagers
             else
             {
                 results.Display();
+            }
+        }
+
+        private void SearchAll()
+        {
+            Console.WriteLine("Please select a tag to search for: ");
+            List<Tag> tags = _tagRepository.GetAll();
+            for (int i = 0; i < tags.Count; i++)
+            {
+                Tag tag = tags[i];
+                Console.WriteLine($" {i + 1}) {tag.Name}");
+            }
+                        Console.Write("> ");
+            int tagId = int.Parse(Console.ReadLine());
+            string tagName = tags[tagId - 1].Name;
+
+            SearchResults<Blog> blogResults = _tagRepository.SearchBlogs(tagName);
+            SearchResults<Author> authorResults = _tagRepository.SearchAuthors(tagName);
+            SearchResults<Post> postResults = _tagRepository.SearchPosts(tagName);
+
+            if (blogResults.NoResultsFound && authorResults.NoResultsFound && postResults.NoResultsFound)
+            {
+                Console.WriteLine($"No results for {tagName}");
+            }
+            else
+            {
+                Console.WriteLine(blogResults.NoResultsFound ? "No matching tags in Blogs" : $"{tagName} in Blogs");
+                blogResults.Display();
+
+                Console.WriteLine(authorResults.NoResultsFound ? "No matching tags in Authors" : $"{tagName} in Authors");
+                authorResults.Display();
+
+                Console.WriteLine(postResults.NoResultsFound ? "No matching tags in Posts" : $"{tagName} in Posts");
+                postResults.Display();
             }
         }
     }
