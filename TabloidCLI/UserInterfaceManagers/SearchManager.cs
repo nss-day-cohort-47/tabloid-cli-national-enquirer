@@ -1,5 +1,6 @@
 ﻿using System;
 using TabloidCLI.Models;
+using System.Collections.Generic;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -34,6 +35,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     SearchAuthors();
                     return this;
                 case "3":
+                    SearchPosts();
                     return this;
                 case "4":
                     return this;
@@ -47,8 +49,8 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void SearchAuthors()
         {
-            Console.Write("Please select a tag to search for");
-             List<Tag> tags = _tagRepository.GetAll();
+            Console.WriteLine("Please select a tag to search for: ");
+            List<Tag> tags = _tagRepository.GetAll();
             for (int i = 0; i < tags.Count; i++)
             {
                 Tag tag = tags[i];
@@ -57,7 +59,9 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("> ");
             int tagId = int.Parse(Console.ReadLine());
             string tagName = tags[tagId - 1].Name;
+
             SearchResults<Author> results = _tagRepository.SearchAuthors(tagName);
+
             if (results.NoResultsFound)
             {
                 Console.WriteLine($"No results for {tagName}");
@@ -70,8 +74,16 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void SearchBlogs()
         {
-            Console.Write("Tags> ");
-            string tagName = Console.ReadLine();
+            Console.WriteLine("Please select a tag to search for: ");
+            List<Tag> tags = _tagRepository.GetAll();
+            for (int i = 0; i < tags.Count; i++)
+            {
+                Tag tag = tags[i];
+                Console.WriteLine($" {i + 1}) {tag.Name}");
+            }
+                        Console.Write("> ");
+            int tagId = int.Parse(Console.ReadLine());
+            string tagName = tags[tagId - 1].Name;
 
             SearchResults<Blog> results = _tagRepository.SearchBlogs(tagName);
 
@@ -87,9 +99,16 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void SearchPosts()
         {
-            Console.Write("Tags> ");
-            string tagName = Console.ReadLine();
-
+            Console.WriteLine("Please select a tag to search for: ");
+            List<Tag> tags = _tagRepository.GetAll();
+            for (int i = 0; i < tags.Count; i++)
+            {
+                Tag tag = tags[i];
+                Console.WriteLine($" {i + 1}) {tag.Name}");
+            }
+                        Console.Write("> ");
+            int tagId = int.Parse(Console.ReadLine());
+            string tagName = tags[tagId - 1].Name;
             SearchResults<Post> results = _tagRepository.SearchPosts(tagName);
 
             if (results.NoResultsFound)
