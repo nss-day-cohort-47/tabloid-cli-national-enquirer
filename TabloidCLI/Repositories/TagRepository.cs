@@ -9,8 +9,13 @@ namespace TabloidCLI
 {
     public class TagRepository : DatabaseConnector, IRepository<Tag>
     {
+        // connect to the database and interface repo 
+        // then do a connection with the database
+
         public TagRepository(string connectionString) : base(connectionString) { }
 
+
+        // Get all will return a list of all the tags
         public List<Tag> GetAll()
         {
             using (SqlConnection conn = Connection)
@@ -18,6 +23,7 @@ namespace TabloidCLI
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
+                    //This command text pulls out the data (id and name) from tag
                     cmd.CommandText = @"SELECT id, Name FROM Tag";
                     List<Tag> tags = new List<Tag>();
 
@@ -86,6 +92,7 @@ namespace TabloidCLI
                                         VALUES (@name)";
                     cmd.Parameters.AddWithValue("@name", tag.Name);
 
+                    // Execute non query since we arent trying to do anything with the inserted data beyond the command
                     cmd.ExecuteNonQuery();
 
                 }
