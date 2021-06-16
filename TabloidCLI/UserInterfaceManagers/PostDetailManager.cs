@@ -18,7 +18,7 @@ namespace TabloidCLI.UserInterfaceManagers
             _postRepository = new PostRepository(connectionString);
             _postId = postId;
         }
-
+        //if this looks familiar to AuthorDetailManager that's good, because I copied this from there and bent it to my will
         public IUserInterfaceManager Execute()
         {
             Post post = _postRepository.Get(_postId);
@@ -92,12 +92,12 @@ namespace TabloidCLI.UserInterfaceManagers
         }
         private void AddTag()
         {
-            // not implemented
+           //tags will be added to posts next, these are placeholders
 
         }
         private void RemoveTag()
         {
-            // not implemented 
+            //tags will be added to posts next, these are placeholders
         }
     }
 }
