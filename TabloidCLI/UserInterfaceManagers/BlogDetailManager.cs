@@ -25,6 +25,7 @@ namespace TabloidCLI.UserInterfaceManagers
         public IUserInterfaceManager Execute()
         {
             Blog blog = _blogRepository.Get(_blogId);
+
             Console.WriteLine($"{blog.Title} Details");
             Console.WriteLine(" 1) View");
             Console.WriteLine(" 2) Add Tag");
@@ -37,22 +38,27 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
+                    Console.Clear();
                     View();
                     return this;
 
                 case "2":
+                    Console.Clear();
                     AddTag();
                     return this;
 
                 case "3":
+                    Console.Clear();
                     RemoveTag();
                     return this;
 
                 case "4":
+                    Console.Clear();
                     ViewPosts();
                     return this;
 
                 case "0":
+                    Console.Clear();
                     return _parentUI;
 
                 default:

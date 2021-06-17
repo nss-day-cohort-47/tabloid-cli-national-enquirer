@@ -36,19 +36,19 @@ namespace TabloidCLI.UserInterfaceManagers
             string choice = Console.ReadLine();
             switch (choice)
             {
-                case "1":
+                case "1": Console.Clear();
                     View();
                     return this;
-                case "2":
+                case "2": Console.Clear();
                     ViewBlogPosts();
                     return this;
-                case "3":
+                case "3": Console.Clear();
                     AddTag();
                     return this;
-                case "4":
+                case "4": Console.Clear();
                     RemoveTag();
                     return this;
-                case "0":
+                case "0": Console.Clear();
                     return _parentUI;
                 default:
                     Console.WriteLine("Invalid Selection");

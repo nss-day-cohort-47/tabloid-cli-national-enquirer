@@ -24,6 +24,7 @@ namespace TabloidCLI.UserInterfaceManagers
         }
         public IUserInterfaceManager Execute()
         {
+       
             Console.WriteLine("Post Menu");
             Console.WriteLine(" 1) List Posts");
             Console.WriteLine(" 2) Add Post");
@@ -38,18 +39,23 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
+                    Console.Clear();
                     List();
                     return this;
                 case "2":
+                    Console.Clear();
                     Add();
                     return this;
                 case "3":
+                    Console.Clear();
                     Edit();
                     return this;
                 case "4":
+                    Console.Clear();
                     Remove();
                     return this;
                 case "5":
+                    Console.Clear();
                     Post post = Choose();
                     if (post == null)
                     {
@@ -60,6 +66,7 @@ namespace TabloidCLI.UserInterfaceManagers
                         return new PostDetailManager(this, _connectionString, post.Id);
                     }
                 case "0":
+                    Console.Clear();
                     return _parentUI;
                 default:
                     Console.WriteLine("Pick something else, cause that ain't it chief");
@@ -88,14 +95,14 @@ namespace TabloidCLI.UserInterfaceManagers
             Blog postBlog = null;
             DateTime postDate = new DateTime();
             Console.Clear();
-            string postTitle = userprompt("Input the post's title");
+            string postTitle = userprompt("Input the post's title: ");
             Console.Clear();
-            string postUrl = userprompt("Input the post's url");
+            string postUrl = userprompt("Input the post's url: ");
 
             bool enteringDate = true;
             while (enteringDate)
             {
-                Console.WriteLine("What is the post's publication date? Cannot be from before 1300 BCE (mm/dd/yyyy)");
+                Console.WriteLine("What is the post's publication date? Cannot be from before 1300 BCE (mm/dd/yyyy): ");
                 string dateInput = Console.ReadLine();
                 try
                 {
@@ -187,13 +194,13 @@ namespace TabloidCLI.UserInterfaceManagers
             }
 
             Console.WriteLine();
-            string newTitle = userprompt("Input a new title or leave blank for it to be unchanged");
+            string newTitle = userprompt("Input a new title or leave blank for it to be unchanged: ");
             if (!string.IsNullOrWhiteSpace(newTitle))
             {
                 postToEdit.Title = newTitle;
             }
 
-            string newUrl = userprompt("Input a new URL or leave blank for it to be unchanged");
+            string newUrl = userprompt("Input a new URL or leave blank for it to be unchanged: ");
             if (!string.IsNullOrWhiteSpace(newUrl))
             {
                 postToEdit.Url = newUrl;
@@ -228,7 +235,7 @@ namespace TabloidCLI.UserInterfaceManagers
             List<Author> authors = _authorRepository.GetAll();
             while (enteringAuthor)
             {
-                Console.WriteLine("Input the new author or leave blank for it to be unchanged");
+                Console.WriteLine("Input the new author or leave blank for it to be unchanged: ");
 
                 for (int i = 0; i < authors.Count; i++)
                 {
@@ -262,7 +269,7 @@ namespace TabloidCLI.UserInterfaceManagers
             List<Blog> blogs = _blogRepository.GetAll();
             while (enteringBlog)
             {
-                Console.WriteLine("Input the new blog or leave blank for it to be unchanged");
+                Console.WriteLine("Input the new blog or leave blank for it to be unchanged: ");
 
                 for (int i = 0; i < blogs.Count; i++)
                 {
