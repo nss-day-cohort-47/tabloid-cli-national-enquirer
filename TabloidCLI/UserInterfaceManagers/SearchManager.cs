@@ -122,9 +122,10 @@ namespace TabloidCLI.UserInterfaceManagers
             }
         }
 
+        // The user woud like to view all objects attached to a specific tag.
         private void SearchAll()
         {
-            // This is taken from above again to have a list of tags for a user to choose from... 
+            // This is taken from above again to have a list of tags for a user to choose from 
             Console.WriteLine("Please select a tag to search for: ");
             List<Tag> tags = _tagRepository.GetAll();
             for (int i = 0; i < tags.Count; i++)
@@ -136,20 +137,24 @@ namespace TabloidCLI.UserInterfaceManagers
             int tagId = int.Parse(Console.ReadLine());
             string tagName = tags[tagId - 1].Name;
 
-            // We need to call the already defined searches to be triggered in the search all. 
-            // It will look through the tag and find what ever is attached.
+            // We need to call the already defined searches to be triggered in the search. 
+            // But we need to give them a unique variable than just results like above.
+            // It will look through the tag and find what ever is attached to either a blog, post or author.
             SearchResults<Blog> blogResults = _tagRepository.SearchBlogs(tagName);
             SearchResults<Author> authorResults = _tagRepository.SearchAuthors(tagName);
             SearchResults<Post> postResults = _tagRepository.SearchPosts(tagName);
 
+            // If nothing is attached to that specific tag let the user know.
             if (blogResults.NoResultsFound && authorResults.NoResultsFound && postResults.NoResultsFound)
             {
                 Console.WriteLine($"No results for {tagName}");
             }
             else
             {
-                // Ternary that will show us that that tag doesnt match anything in our database or 
-                // or will show those objects attached to the tag. (May need a little more work)
+                // Ternary that will show us that that tag doesnt match anything in our database 
+                // Or will show those objects attached to the tag. (May need a little more work)
+                // If no results are found then let the user know that it doesnt have one, if there is one
+                // let the user know that that tag has a match and it will be displayed underneath the WriteLine.
                 Console.WriteLine(blogResults.NoResultsFound ? "No matching tags in Blogs" : $"{tagName}: in Blogs");
                 blogResults.Display();
 
