@@ -51,7 +51,6 @@ namespace TabloidCLI.UserInterfaceManagers
                     Remove();
                     return this;
                 case "5":
-                    NoteList();
                     return this;
                 case "6":
                     Post post = Choose();
@@ -352,17 +351,6 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(message);
             string output = Console.ReadLine();
             return output;
-        }
-        private void NoteList()
-        {
-            List<Note> nosts = _noteRepository.GetAll();
-            Console.WriteLine("Notes: ");
-            Console.WriteLine("");
-            foreach (Note note in notes)
-            {
-                Console.WriteLine($"Note Title: {note.Title}  Content of the note: {note.content} Created on {note.CreateDateTime}");
-            }
-            Console.WriteLine("");
         }
     }
 }
