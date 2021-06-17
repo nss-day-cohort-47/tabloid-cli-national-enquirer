@@ -1,18 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TabloidCLI.Models;
+using TabloidCLI.Repositories;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
     class BackgroundColor : IUserInterfaceManager
     {
+        private ColorRepository _colorRepository;
         private  IUserInterfaceManager _parentUI;
+        private string _connectionString;
         public BackgroundColor(IUserInterfaceManager parentUI)
         {
             _parentUI = parentUI;
+            _colorRepository = colorRepository;
         }
         public IUserInterfaceManager Execute()
-        {
+        {   // Would we need a list to select either background or foreground before giving the user the list of colors, based on the choice of the first question we could set the associated property to the color selected.
 
             Console.WriteLine("Color Menu");
             Console.WriteLine(" 1) Red");
