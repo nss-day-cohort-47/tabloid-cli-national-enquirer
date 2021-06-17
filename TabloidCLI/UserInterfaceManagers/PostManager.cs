@@ -120,7 +120,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 for (int i = 0; i < authors.Count; i++)
                 {
                     Author author = authors[i];
-                    Console.WriteLine($"{author.Id} - {author.FullName}");
+                    Console.WriteLine($"{i + 1}) {author.FullName}");
                 }
                 string input = userprompt("> ");
                 try
@@ -348,7 +348,7 @@ namespace TabloidCLI.UserInterfaceManagers
         }
         private string userprompt(string message)
         {
-            Console.WriteLine(message);
+            Console.Write(message);
             string output = Console.ReadLine();
             return output;
         }

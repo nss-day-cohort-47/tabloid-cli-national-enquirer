@@ -15,6 +15,7 @@ namespace TabloidCLI
             using (SqlConnection conn = Connection)
             {
                 conn.Open();
+                // adding a where to filter out the 'soft deletes' from appearing in the getAll
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"SELECT id,
@@ -140,6 +141,12 @@ namespace TabloidCLI
             }
         }
 
+        //Changed this to a 'soft delete'
+        //Soft deletes still have the data, but you filter out the information
+        //This makes it so posts that an author made can still appear, even if the author is deleted (vs a cascade delete to remove all related data)
+        //The 'isDeleted' data is a Bit - bits are either (0-1) or (true or false), so that it represents the data as an either/or. 
+        //So instead of DELETE, we UPDATE the isDeleted to 1, so that it shows it as 'isDeleted: True"
+        //Then we filter out the true data in the Get All function
         public void Delete(int id)
         {
             using (SqlConnection conn = Connection)

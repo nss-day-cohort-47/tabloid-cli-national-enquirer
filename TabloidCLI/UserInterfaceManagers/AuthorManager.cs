@@ -121,6 +121,7 @@ namespace TabloidCLI.UserInterfaceManagers
             author.Bio = Console.ReadLine();
 
             Console.WriteLine($"Adding {author.FullName} to the database");
+            Console.Clear();
 
             _authorRepository.Insert(author);
         }

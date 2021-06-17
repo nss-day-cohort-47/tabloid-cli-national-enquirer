@@ -40,6 +40,7 @@ CREATE TABLE Post (
     PublishDateTime DATETIME NOT NULL,
     AuthorId INTEGER NOT NULL,
     BlogId INTEGER NOT NULL,
+    isDeleted BIT NOT NULL
 
     CONSTRAINT FK_Post_Author FOREIGN KEY(AuthorId) REFERENCES Author(Id),
     CONSTRAINT FK_Post_Blog FOREIGN KEY(BlogId) REFERENCES Blog(Id)
