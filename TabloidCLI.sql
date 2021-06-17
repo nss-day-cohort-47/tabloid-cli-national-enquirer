@@ -113,7 +113,7 @@ INSERT INTO Blog (Title, URL) VALUES ( 'Scott Hanselman Blog', 'https://www.hans
 INSERT INTO Post ( Title, URL, PublishDateTime, AuthorId, BlogId ) VALUES ('Forms of notional machines', 'https://www.felienne.com/archives/6392', '2019-07-12', 3, 3);
 INSERT INTO Post ( Title, URL, PublishDateTime, AuthorId, BlogId ) VALUES ('Carter finally gets post add to work', 'https://dbdiagram.io/d/5fce53559a6c525a03ba2069', '06-15-2021', 3, 3);
 
---INSERT INTO Note ( Title, Content, CreateDateTime, PostId ) VALUES ();
+INSERT INTO Note ( Title, Content, CreateDateTime, PostId ) VALUES ( 'Carter hates notes', 'I feel this note is fairly straight forward and understandable', '2021-06-16', 1);
 
 INSERT INTO Tag ( Name ) VALUES ( 'nerdy' );
 
