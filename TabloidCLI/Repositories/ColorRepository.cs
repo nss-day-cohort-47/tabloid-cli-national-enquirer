@@ -6,7 +6,7 @@ using TabloidCLI.Repositories;
 
 namespace TabloidCLI
 {
-    public class ColorRepository : DatabaseConnector, IRepository<Colort>
+    public class ColorRepository : DatabaseConnector, IRepository<Color>
     {
         public ColorRepository(string connectionString) : base(connectionString) { }
 
@@ -33,8 +33,8 @@ namespace TabloidCLI
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT c.id,
-                                               c.Name,
+                    cmd.CommandText = @"SELECT c.ColorChoice
+                                               
                                           FROM Color c";
                     cmd.Parameters.AddWithValue("@id", id);
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -46,7 +46,7 @@ namespace TabloidCLI
                             Color = new Color()
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                                Name = reader.GetString(reader.GetOrdinal("ColorName")),
+                                ColorChoice = reader.GetInt32(reader.GetOrdinal("ColorChoice")),
                             };
                         }
                     }
@@ -56,7 +56,7 @@ namespace TabloidCLI
                 }
             }
         }
-        public Color Update (int id)
+        public void Update(Color ColorChoice)
         {
             using (SqlConnection conn = Connection)
             {
@@ -64,10 +64,11 @@ namespace TabloidCLI
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"UPDATE Color,
-                                               SET Name = @name,
-                                               WHERE id = @id"
+                                               SET ColorChoice = @choice
+                                               WHERE id = @id";
                      cmd.Parameters.AddwithValue("@id", color.id);
-                     cmd.Parameters.AddWithValue("@name", color.Name);
+                     cmd.Parameters.AddWithValue("@choice", color.ColorChoice);
+                     
 
                     cmd.ExecuteNonQuery();
                 }

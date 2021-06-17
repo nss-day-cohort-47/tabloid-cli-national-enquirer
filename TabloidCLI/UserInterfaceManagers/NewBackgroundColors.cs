@@ -36,11 +36,13 @@ namespace TabloidCLI.UserInterfaceManagers
 
             Console.Write("> ");
             string choice = Console.ReadLine();
+
             Console.Clear();
             switch (choice)
             {
                 case "1":
-                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.Clear();
                     return this;
                 case "2":
@@ -50,18 +52,22 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                 case "3":
                     Console.BackgroundColor = ConsoleColor.DarkGreen;
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.Clear();
                     return this;
                 case "4":
                     Console.BackgroundColor = ConsoleColor.DarkCyan;
+                    Console.ForegroundColor = ConsoleColor.Black;
                     Console.Clear();
                     return this;
                 case "5":
                     Console.BackgroundColor = ConsoleColor.DarkRed;
+                    Console.ForegroundColor = ConsoleColor.Black;
                     Console.Clear();
                     return this;
                 case "6":
                     Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                    Console.ForegroundColor = ConsoleColor.Black;
                     Console.Clear();
                     return this;
                 case "7":
@@ -71,14 +77,17 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                 case "8":
                     Console.BackgroundColor = ConsoleColor.DarkGray;
+                    Console.ForegroundColor = ConsoleColor.Black;
                     Console.Clear();
                     return this;
                 case "9":
                     Console.BackgroundColor = ConsoleColor.Blue;
+                    Console.ForegroundColor = ConsoleColor.Black;
                     Console.Clear();
                     return this;
                 case "10":
                     Console.BackgroundColor = ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.Black;
                     Console.Clear();
                     return this;
                 case "11":
