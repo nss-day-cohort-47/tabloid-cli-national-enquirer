@@ -16,7 +16,8 @@ namespace TabloidCLI.UserInterfaceManagers
         }
 
         public IUserInterfaceManager Execute()
-        {
+        {   
+
             Console.WriteLine("Search Menu");
             Console.WriteLine(" 1) Search Blogs");
             Console.WriteLine(" 2) Search Authors");
@@ -28,19 +29,19 @@ namespace TabloidCLI.UserInterfaceManagers
             string choice = Console.ReadLine();
             switch (choice)
             {
-                case "1":
+                case "1": Console.Clear();
                     SearchBlogs();
                     return this;
-                case "2":
+                case "2": Console.Clear();
                     SearchAuthors();
                     return this;
-                case "3":
+                case "3": Console.Clear();
                     SearchPosts();
                     return this;
-                case "4":
+                case "4": Console.Clear();
                     SearchAll();
                     return this;
-                case "0":
+                case "0": Console.Clear();
                     return _parentUI;
                 default:
                     Console.WriteLine("Invalid Selection");

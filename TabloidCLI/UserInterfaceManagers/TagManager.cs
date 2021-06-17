@@ -18,7 +18,8 @@ namespace TabloidCLI.UserInterfaceManagers
         }
 
         public IUserInterfaceManager Execute()
-        {
+        {   
+
             Console.WriteLine("Tag Menu");
             Console.WriteLine(" 1) List Tags");
             Console.WriteLine(" 2) Add Tag");
@@ -30,22 +31,22 @@ namespace TabloidCLI.UserInterfaceManagers
             string choice = Console.ReadLine();
             switch (choice)
             {
-                case "1":
+                case "1": Console.Clear();
                     List();
                     Console.WriteLine();
                     return this;
-                case "2":
+                case "2": Console.Clear();
                     Add();
                     Console.WriteLine();
                     return this;
-                case "3":
+                case "3": Console.Clear();
                     Edit();
                     Console.WriteLine();
                     return this;
-                case "4":
+                case "4": Console.Clear();
                     Remove();
                     return this;
-                case "0":
+                case "0": Console.Clear();
                     return _parentUI;
                 default:
                     Console.WriteLine("Invalid Selection");

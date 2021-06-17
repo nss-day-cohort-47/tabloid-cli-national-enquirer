@@ -26,6 +26,7 @@ namespace TabloidCLI.UserInterfaceManagers
         public IUserInterfaceManager Execute()
         {
             Post post = _postRepository.Get(_postId);
+
             Console.WriteLine($"{post.Title} Details");
             Console.WriteLine(" 1) View");
             Console.WriteLine(" 2) Add Tag");
@@ -38,16 +39,22 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
+                    Console.Clear();
                     View();
                     return this;
                 case "2":
+                    Console.Clear();
                     AddTag();
                     return this;
                 case "3":
+                    Console.Clear();
                     RemoveTag();
                     return this;
-                case "4":return new NoteManager(this, CONNECTION_STRING);
+                case "4":
+                    Console.Clear();
+                    return new NoteManager(this, CONNECTION_STRING);
                 case "0":
+                    Console.Clear();
                     return _parentUI;
                 default:
                     Console.WriteLine("Invalid Selection");
