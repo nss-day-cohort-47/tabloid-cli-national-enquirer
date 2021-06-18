@@ -1,31 +1,23 @@
 # Tabloid CLI
 
-## The Story
+## The Team
 
-"Hey, let's start a company," you say.
-
-"Ok. Let's do it. What should our company do?"
-
-"Well..." you begin, "what do people need? What will they find valuable?"
-
-"I know I always need help keeping things organized."
-
-"Yeah," you say, pondering the idea. "Organization. That's good. What should we organize? ...I know: Blog Posts!"
-
-"Great idea!"
-
-"We'll make millions!"
+Dakota Upchurch, Sidney Crandall, Carter Culkin and Laurel Morrison
 
 ---
 
-## The Tabloid Proof of Concept
+## Summary
 
-Our new business will create a software product to allow people save info about favorite blog posts, authors and blogs.
+Our new business will create a software product to allow people to save info about favorite blog posts, authors and blogs. The goal of this project is to create a command line app as a Proof of Concept. The app is built in C# with data in SQL server.
 
-In order to test the new business idea, we'll create a [Proof of Concept (POC)](https://en.wikipedia.org/wiki/Proof_of_concept#Software_development). This POC will be a simplified implementation of the idea that will be used to test the business idea to ensure that customers would find it valuable, and also to allow the team to get a handle on the concept. After we complete the POC we will use it to evaluate our business idea and determine if we need to pivot (change direction) toward another idea.
+## Goal 
 
-For our POC, we will build a command line app in C# and save our data in SQL Server.
+As a team work through SCRUM method tickets to build a command line app. The app will utilize CRUD functionality and be built using C# and SQL in Visual Studios.
 
-The ERD for the POC is provided below
+---
 
-https://dbdiagram.io/d/5fce53559a6c525a03ba2069
+## ERD
+![dbdiagram](https://user-images.githubusercontent.com/78938657/122581850-7af25000-d025-11eb-8164-1d4956a90081.PNG)
+
+## SNIPPET
+![1](https://user-images.githubusercontent.com/78938657/122581864-7f1e6d80-d025-11eb-8eb1-b3f1ad20777d.PNG)
