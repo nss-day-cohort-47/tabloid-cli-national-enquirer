@@ -18,7 +18,7 @@ namespace TabloidCLI
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT id, Name FROM Tag";
+                    cmd.CommandText = @"SELECT id, Name FROM Tag WHERE isDeleted=0";
                     List<Tag> tags = new List<Tag>();
 
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -117,9 +117,11 @@ namespace TabloidCLI
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"DELETE FROM Tag
+                    cmd.CommandText = @"UPDATE Tag
+                                        SET isDeleted=@isDeleted
                                         WHERE id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@isDeleted", 1);
 
                     cmd.ExecuteNonQuery();
                 }
