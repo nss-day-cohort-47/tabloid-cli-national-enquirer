@@ -19,5 +19,5 @@ As a team work through SCRUM method tickets to build a command line app. The app
 ## ERD
 ![dbdiagram](https://user-images.githubusercontent.com/78938657/122581850-7af25000-d025-11eb-8164-1d4956a90081.PNG)
 
-## SNIPPET
+## Snippet
 ![1](https://user-images.githubusercontent.com/78938657/122581864-7f1e6d80-d025-11eb-8eb1-b3f1ad20777d.PNG)
